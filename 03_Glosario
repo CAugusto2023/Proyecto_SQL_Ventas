@@ -1,0 +1,86 @@
+-- ==========================================
+-- GLOSARIO DE FUNCIONES Y COMANDOS SQL
+-- ==========================================
+
+-- SELECT
+-- Sirve para seleccionar columnas de una tabla.
+-- Ejemplo:
+SELECT Nombre, Ciudad FROM Clientes;
+
+-- WHERE
+-- Filtra registros según una condición.
+-- Ejemplo:
+SELECT * FROM Clientes WHERE Ciudad = 'Lima';
+
+-- ORDER BY
+-- Ordena los resultados (ASC = ascendente, DESC = descendente).
+-- Ejemplo:
+SELECT * FROM Productos ORDER BY Precio DESC;
+
+-- GROUP BY
+-- Agrupa filas que comparten un valor en común.
+-- Ejemplo: Total gastado por cliente
+SELECT ClienteID, SUM(MontoTotal) 
+FROM Ventas 
+GROUP BY ClienteID;
+
+-- HAVING
+-- Filtra grupos creados con GROUP BY (similar a WHERE pero aplicado a grupos).
+-- Ejemplo: Clientes que gastaron más de 5000
+SELECT ClienteID, SUM(MontoTotal) AS Total
+FROM Ventas
+GROUP BY ClienteID
+HAVING SUM(MontoTotal) > 5000;
+
+-- COUNT()
+-- Devuelve el número de registros.
+-- Ejemplo:
+SELECT COUNT(*) AS TotalClientes FROM Clientes;
+
+-- SUM()
+-- Devuelve la suma de valores de una columna.
+-- Ejemplo:
+SELECT SUM(MontoTotal) AS TotalVentas FROM Ventas;
+
+-- AVG()
+-- Devuelve el promedio de los valores de una columna.
+-- Ejemplo:
+SELECT AVG(Precio) AS PrecioPromedio FROM Productos;
+
+-- MIN() / MAX()
+-- Devuelven el valor mínimo o máximo de una columna.
+-- Ejemplo:
+SELECT MIN(Precio) AS PrecioMin, MAX(Precio) AS PrecioMax FROM Productos;
+
+-- JOIN
+-- Combina filas de varias tablas relacionadas.
+-- Tipos principales:
+--   INNER JOIN → Solo coincidencias
+--   LEFT JOIN → Todos los de la tabla izquierda + coincidencias
+--   RIGHT JOIN → Todos los de la tabla derecha + coincidencias
+--   FULL JOIN → Todos los registros (si hay coincidencia o no)
+
+-- Ejemplo: Cliente y producto comprado
+SELECT c.Nombre, p.nombre_Producto
+FROM Ventas v
+JOIN Clientes c ON v.ClienteID = c.id_Cliente
+JOIN Productos p ON v.ProductoID = p.id_Producto;
+
+-- TOP / LIMIT
+-- Limita el número de registros devueltos.
+-- En SQL Server se usa TOP, en MySQL/Postgres se usa LIMIT.
+-- Ejemplo (SQL Server):
+SELECT TOP 5 * FROM Ventas;
+-- Ejemplo (MySQL/Postgres):
+-- SELECT * FROM Ventas LIMIT 5;
+
+-- LIKE
+-- Busca patrones en texto.
+-- % = varios caracteres, _ = un solo caracter.
+-- Ejemplo: Clientes cuyo nombre empieza con "A"
+SELECT * FROM Clientes WHERE Nombre LIKE 'A%';
+
+-- DISTINCT
+-- Elimina duplicados en los resultados.
+-- Ejemplo: Ciudades distintas de clientes
+SELECT DISTINCT Ciudad FROM Clientes;
