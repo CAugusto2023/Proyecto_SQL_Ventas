@@ -1,1 +1,53 @@
 
+-- ==========================================
+-- INSERCIÓN DE DATOS
+-- ==========================================
+
+-- Clientes
+INSERT INTO Clientes (id_Cliente, Nombre, Edad, Genero, Ciudad) VALUES
+(1, 'Ana Torres', 28, 'F', 'Lima'),
+(2, 'Carlos Pérez', 35, 'M', 'Arequipa'),
+(3, 'María López', 42, 'F', 'Trujillo'),
+(4, 'José Ramos', 31, 'M', 'Lima'),
+(5, 'Lucía Fernández', 27, 'F', 'Piura'),
+(6, 'Pedro Gómez', 38, 'M', 'Arequipa'),
+(7, 'Elena Vargas', 29, 'F', 'Lima'),
+(8, 'Juan Castillo', 33, 'M', 'Trujillo'),
+(9, 'Paola Díaz', 41, 'F', 'Piura'),
+(10, 'Andrés Ruiz', 26, 'M', 'Lima');
+
+-- Productos
+INSERT INTO Productos (id_Producto, nombre_Producto, Categoria, Precio) VALUES
+(101, 'Laptop Pro 15', 'Electrónica', 3500),
+(102, 'Mouse Inalámbrico', 'Accesorios', 80),
+(103, 'Silla Ergonómica', 'Muebles', 600),
+(104, 'Escritorio Gamer', 'Muebles', 950),
+(105, 'Smartphone X', 'Electrónica', 2800),
+(106, 'Auriculares Bluetooth', 'Accesorios', 200),
+(107, 'Monitor 27 UHD', 'Electrónica', 1500),
+(108, 'Teclado Mecánico', 'Accesorios', 300),
+(109, 'Impresora Multifunción', 'Electrónica', 1200),
+(110, 'Lámpara LED', 'Muebles', 150);
+
+-- Sucursales
+INSERT INTO Sucursales (id_Sucursal, Ciudad, Gerente) VALUES
+(1, 'Lima', 'Pedro Sánchez'),
+(2, 'Arequipa', 'Laura Gómez'),
+(3, 'Trujillo', 'Diego Torres'),
+(4, 'Piura', 'Sofía Castro');
+
+-- Ventas
+INSERT INTO Ventas (id_Venta, Fecha, ClienteID, ProductoID, SucursalID, Cantidad, MontoTotal) VALUES
+(1001, '2025-01-15', 1, 101, 1, 1, 3500),
+(1002, '2025-01-16', 2, 102, 2, 2, 160),
+(1003, '2025-01-17', 3, 103, 3, 1, 600),
+(1004, '2025-01-18', 4, 104, 1, 1, 950),
+(1005, '2025-01-19', 5, 105, 4, 1, 2800),
+(1006, '2025-02-01', 1, 102, 1, 3, 240),
+(1007, '2025-02-03', 2, 101, 2, 1, 3500),
+(1008, '2025-02-05', 3, 105, 3, 2, 5600),
+(1009, '2025-02-06', 6, 106, 2, 1, 200),
+(1010, '2025-02-08', 7, 107, 1, 1, 1500),
+(1011, '2025-02-10', 8, 108, 3, 2, 600),
+(1012, '2025-02-12', 9, 109, 4, 1, 1200),
+(1013, '2025-02-14', 10, 110, 1, 4, 600);
