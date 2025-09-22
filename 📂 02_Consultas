@@ -1,0 +1,120 @@
+-- ==========================================
+-- CONSULTAS BÁSICAS
+-- ==========================================
+
+-- Lista todos los clientes
+SELECT * 
+FROM Clientes;
+
+-- Lista el nombre y ciudad de los clientes
+SELECT Nombre, Ciudad
+FROM Clientes;
+
+-- Lista todos los productos
+SELECT * 
+FROM Productos;
+
+-- Muestra nombre del producto y precio
+SELECT nombre_Producto, Precio
+FROM Productos;
+
+-- Ordena los productos por precio de mayor a menor
+SELECT nombre_Producto, Precio
+FROM Productos
+ORDER BY Precio DESC;
+
+-- Clientes que viven en Lima
+SELECT Nombre, Ciudad
+FROM Clientes
+WHERE Ciudad = 'Lima';
+
+-- Lista todas las ventas
+SELECT * 
+FROM Ventas;
+
+-- Ventas con monto mayor a 2000
+SELECT ClienteID, id_Venta, MontoTotal
+FROM Ventas
+WHERE MontoTotal > 2000;
+
+-- Número total de clientes
+SELECT COUNT(*) AS TotalClientes
+FROM Clientes;
+
+-- Precio promedio de productos
+SELECT AVG(Precio) AS PromedioPrecio
+FROM Productos;
+
+-- Suma total de ventas
+SELECT SUM(MontoTotal) AS TotalVentas
+FROM Ventas;
+
+-- Las primeras 5 ventas
+SELECT TOP 5 * 
+FROM Ventas;
+
+-- ==========================================
+-- EXAMEN BÁSICAS
+-- ==========================================
+
+-- Pregunta 1: Lista todos los clientes que viven en Arequipa
+SELECT Nombre, Ciudad
+FROM Clientes
+WHERE Ciudad = 'Arequipa';
+
+-- Pregunta 2: Nombre del producto y precio, solo si cuesta más de 1000
+SELECT nombre_Producto, Precio
+FROM Productos
+WHERE Precio > 1000;
+
+-- Pregunta 3: Número total de ventas registradas
+SELECT COUNT(*) AS TotalVentas
+FROM Ventas;
+
+-- Pregunta 4: Ordenar los productos por precio de menor a mayor
+SELECT *
+FROM Productos
+ORDER BY Precio ASC;
+
+-- Pregunta 5: Nombre del cliente y total gastado
+SELECT c.Nombre, 
+       SUM(v.MontoTotal) AS TotalGastado
+FROM Ventas v
+JOIN Clientes c ON v.ClienteID = c.id_Cliente
+GROUP BY c.Nombre
+ORDER BY TotalGastado DESC;
+
+-- ==========================================
+-- CONSULTAS CON JOIN
+-- ==========================================
+
+-- Cliente y producto comprado en cada venta
+SELECT c.Nombre AS Cliente,
+       p.nombre_Producto AS Producto
+FROM Ventas v
+JOIN Clientes c ON v.ClienteID = c.id_Cliente
+JOIN Productos p ON v.ProductoID = p.id_Producto
+ORDER BY c.Nombre;
+
+-- Reporte completo: cliente, ciudad, producto, precio, cantidad y total
+SELECT c.Nombre AS Cliente,
+       c.Ciudad,
+       p.nombre_Producto AS Producto,
+       p.Precio AS PrecioUnitario,
+       v.Cantidad,
+       v.MontoTotal AS MontoTotal
+FROM Ventas v
+JOIN Clientes c ON v.ClienteID = c.id_Cliente
+JOIN Productos p ON v.ProductoID = p.id_Producto
+ORDER BY c.Nombre;
+
+-- Clientes de Lima con detalle de compras
+SELECT c.Nombre AS Cliente,
+       p.nombre_Producto AS Producto,
+       v.Cantidad,
+       v.MontoTotal,
+       c.Ciudad
+FROM Ventas v
+JOIN Clientes c ON v.ClienteID = c.id_Cliente
+JOIN Productos p ON v.ProductoID = p.id_Producto
+WHERE c.Ciudad = 'Lima';
