@@ -1,0 +1,87 @@
+01_creacion_tablas.sql
+-- Crear base de datos
+CREATE DATABASE PracticaCSV;
+GO
+USE PracticaCSV;
+GO
+
+-- Tabla limpia (destino final)
+CREATE TABLE VentasLimpias (
+    id_Venta INT,
+    Cliente VARCHAR(100),
+    Producto VARCHAR(100),
+    Cantidad INT,
+    MontoTotal DECIMAL(10,2),
+    Fecha DATE
+);
+
+02_carga_csv.sql
+-- Paso 1: Importar CSV con el asistente de SQL Server
+-- (Generalmente crea una tabla "Ventas" con todas las columnas en VARCHAR).
+
+-- Paso 2: Revisar los nombres de columnas de la tabla importada
+SELECT TOP 5 * FROM Ventas;
+
+-- Paso 3: Pasar datos de Ventas (sucia) → VentasLimpias (con tipos correctos)
+INSERT INTO VentasLimpias (id_Venta, Cliente, Producto, Cantidad, MontoTotal, Fecha)
+SELECT 
+    CAST(id_Venta AS INT),
+    Cliente,
+    Producto,
+    CAST(Cantidad AS INT),
+    CAST(monto_total AS DECIMAL(10,2)),
+    CAST(Fecha AS DATE)
+FROM Ventas;
+
+03_consultas_basicas.sql
+-- Total de ventas
+SELECT SUM(MontoTotal) AS TotalVentas
+FROM VentasLimpias;
+
+-- Top 5 clientes que más gastaron
+SELECT Cliente, SUM(MontoTotal) AS TotalGastado
+FROM VentasLimpias
+GROUP BY Cliente
+ORDER BY TotalGastado DESC
+OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY;
+
+-- Productos más vendidos
+SELECT Producto, SUM(Cantidad) AS TotalCantidad
+FROM VentasLimpias
+GROUP BY Producto
+ORDER BY TotalCantidad DESC;
+
+04_Datos
+
+id_venta,fecha,cliente,ciudad,producto,categoria,cantidad,precio_unitario,monto_total
+1,2025-01-05,Ana Torres,Lima,Laptop Pro 15,Electrónica,1,3500,3500
+2,2025-01-06,Carlos Pérez,Arequipa,Mouse Inalámbrico,Accesorios,2,80,160
+3,2025-01-07,María López,Trujillo,Silla Ergonómica,Muebles,1,600,600
+4,2025-01-08,José Ramos,Lima,Escritorio Gamer,Muebles,1,950,950
+5,2025-01-09,Lucía Fernández,Piura,Smartphone X,Electrónica,1,2800,2800
+6,2025-01-10,Ana Torres,Lima,Auriculares Bluetooth,Accesorios,2,150,300
+7,2025-01-11,Carlos Pérez,Arequipa,Laptop Pro 15,Electrónica,1,3500,3500
+8,2025-01-12,María López,Trujillo,Mouse Inalámbrico,Accesorios,1,80,80
+9,2025-01-13,José Ramos,Lima,Smartphone X,Electrónica,1,2800,2800
+10,2025-01-14,Lucía Fernández,Piura,Silla Ergonómica,Muebles,2,600,1200
+11,2025-01-15,Pedro Gómez,Arequipa,Monitor 27 UHD,Electrónica,1,1500,1500
+12,2025-01-16,Elena Vargas,Lima,Teclado Mecánico,Accesorios,1,300,300
+13,2025-01-17,Juan Castillo,Trujillo,Impresora Multifunción,Electrónica,1,1200,1200
+14,2025-01-18,Paola Díaz,Piura,Lámpara LED,Muebles,3,150,450
+15,2025-01-19,Andrés Ruiz,Lima,Laptop Pro 15,Electrónica,1,3500,3500
+16,2025-01-20,Ana Torres,Lima,Mouse Inalámbrico,Accesorios,2,80,160
+17,2025-01-21,Carlos Pérez,Arequipa,Escritorio Gamer,Muebles,1,950,950
+18,2025-01-22,María López,Trujillo,Auriculares Bluetooth,Accesorios,2,150,300
+19,2025-01-23,José Ramos,Lima,Monitor 27 UHD,Electrónica,1,1500,1500
+20,2025-01-24,Lucía Fernández,Piura,Smartphone X,Electrónica,1,2800,2800
+21,2025-01-25,Pedro Gómez,Arequipa,Teclado Mecánico,Accesorios,1,300,300
+22,2025-01-26,Elena Vargas,Lima,Silla Ergonómica,Muebles,1,600,600
+23,2025-01-27,Juan Castillo,Trujillo,Impresora Multifunción,Electrónica,1,1200,1200
+24,2025-01-28,Paola Díaz,Piura,Lámpara LED,Muebles,2,150,300
+25,2025-01-29,Andrés Ruiz,Lima,Smartphone X,Electrónica,1,2800,2800
+26,2025-01-30,Ana Torres,Lima,Laptop Pro 15,Electrónica,1,3500,3500
+27,2025-01-31,Carlos Pérez,Arequipa,Auriculares Bluetooth,Accesorios,2,150,300
+28,2025-02-01,María López,Trujillo,Mouse Inalámbrico,Accesorios,3,80,240
+29,2025-02-02,José Ramos,Lima,Lámpara LED,Muebles,2,150,300
+30,2025-02-03,Lucía Fernández,Piura,Monitor 27 UHD,Electrónica,1,1500,1500
+
